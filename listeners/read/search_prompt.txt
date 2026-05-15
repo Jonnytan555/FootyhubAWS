@@ -1,0 +1,5 @@
+Find up to {max_results} recent articles about: {query}. 
+For EVERY source you cite, you MUST write a dedicated paragraph of at least 2 sentences starting with its citation number in brackets on its own line, 
+e.g. [1] First sentence. Second sentence. [2] First sentence. Second sentence. 
+Every cited source needs its own paragraph. 
+Do not group or merge sources.

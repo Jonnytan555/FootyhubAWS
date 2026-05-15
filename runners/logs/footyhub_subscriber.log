@@ -1,0 +1,240 @@
+2026-05-12 14:06:55,177 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:06:56,857 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:06:57,934 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:06:58,896 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:07:03,653 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:07:04,533 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:07:05,486 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:07:11,419 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:07:12,875 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-05-12 14:07:12,895 [MainThread  ] [ERROR   ] [run_subscriber.py:51] [KeyError("['source_record_id'] not in index"), 'Traceback (most recent call last):\n  File "C:\\Python\\AI\\FootyHub\\runners\\run_subscriber.py", line 46, in run\n    ).run()\n      ~~~^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\article_pipeline.py", line 15, in run\n    self.writer.write(result)\n    ~~~~~~~~~~~~~~~~~^^^^^^^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\save\\article_writer.py", line 26, in write\n    df = pd.DataFrame(rows)[_DB_COLS]\n         ~~~~~~~~~~~~~~~~~~^^^^^^^^^^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\pandas\\core\\frame.py", line 4119, in __getitem__\n    indexer = self.columns._get_indexer_strict(key, "columns")[1]\n              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\pandas\\core\\indexes\\base.py", line 6212, in _get_indexer_strict\n    self._raise_if_missing(keyarr, indexer, axis_name)\n    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\pandas\\core\\indexes\\base.py", line 6264, in _raise_if_missing\n    raise KeyError(f"{not_found} not in index")\nKeyError: "[\'source_record_id\'] not in index"\n']
+2026-05-12 14:08:35,154 [MainThread  ] [ERROR   ] [db_insert_handler.py:68] [DbInsertHandler] Failed to insert into dbo.articles
+Traceback (most recent call last):
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'dbo.articles'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Python\AI\FootyHub\utils\scraper\persistence\db_insert_handler.py", line 57, in handle
+    result = conn.execute(sa.text(insert_sql))
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name 'dbo.articles'. (208) (SQLExecDirectW)")
+[SQL: 
+            INSERT INTO [dbo].[articles] ([source_type], [source_name], [source_record_id], [source_url], [title], [body_text], [published_at], [topic], [competition], [club], [player_name])
+            OUTPUT inserted.*
+            SELECT source.[source_type], source.[source_name], source.[source_record_id], source.[source_url], source.[title], source.[body_text], source.[published_at], source.[topic], source.[competition], source.[club], source.[player_name]
+            FROM [dbo].[articles_tmp_29325f3adb4a] AS source
+            WHERE NOT EXISTS (
+                SELECT 1 FROM [dbo].[articles] AS target
+                WHERE target.[source_type] = source.[source_type] AND target.[source_name] = source.[source_name] AND target.[source_record_id] = source.[source_record_id]
+            )
+        ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-12 14:08:35,178 [MainThread  ] [ERROR   ] [run_subscriber.py:54] [ProgrammingError('(pyodbc.ProgrammingError) (\'42S02\', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name \'dbo.articles\'. (208) (SQLExecDirectW)")'), 'Traceback (most recent call last):\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1967, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\default.py", line 952, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\npyodbc.ProgrammingError: (\'42S02\', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name \'dbo.articles\'. (208) (SQLExecDirectW)")\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "C:\\Python\\AI\\FootyHub\\runners\\run_subscriber.py", line 49, in run\n    ).run()\n      ~~~^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\article_pipeline.py", line 15, in run\n    self.writer.write(result)\n    ~~~~~~~~~~~~~~~~~^^^^^^^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\save\\article_writer.py", line 27, in write\n    self.handle(df)\n    ~~~~~~~~~~~^^^^\n  File "C:\\Python\\AI\\FootyHub\\utils\\scraper\\persistence\\db_insert_handler.py", line 57, in handle\n    result = conn.execute(sa.text(insert_sql))\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1419, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\sql\\elements.py", line 527, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1641, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<8 lines>...\n        cache_hit=cache_hit,\n    )\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1846, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1986, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 2363, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1967, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\default.py", line 952, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\nsqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) (\'42S02\', "[42S02] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid object name \'dbo.articles\'. (208) (SQLExecDirectW)")\n[SQL: \n            INSERT INTO [dbo].[articles] ([source_type], [source_name], [source_record_id], [source_url], [title], [body_text], [published_at], [topic], [competition], [club], [player_name])\n            OUTPUT inserted.*\n            SELECT source.[source_type], source.[source_name], source.[source_record_id], source.[source_url], source.[title], source.[body_text], source.[published_at], source.[topic], source.[competition], source.[club], source.[player_name]\n            FROM [dbo].[articles_tmp_29325f3adb4a] AS source\n            WHERE NOT EXISTS (\n                SELECT 1 FROM [dbo].[articles] AS target\n                WHERE target.[source_type] = source.[source_type] AND target.[source_name] = source.[source_name] AND target.[source_record_id] = source.[source_record_id]\n            )\n        ]\n(Background on this error at: https://sqlalche.me/e/20/f405)\n']
+2026-05-12 14:16:16,104 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 9 new rows into dbo.articles
+2026-05-12 14:16:16,128 [MainThread  ] [ERROR   ] [run_subscriber.py:54] [ProgrammingError('(pyodbc.ProgrammingError) ("A TVP\'s rows must be Sequence objects.", \'HY000\')'), 'Traceback (most recent call last):\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1967, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\default.py", line 952, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\npyodbc.ProgrammingError: ("A TVP\'s rows must be Sequence objects.", \'HY000\')\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "C:\\Python\\AI\\FootyHub\\runners\\run_subscriber.py", line 49, in run\n    ).run()\n      ~~~^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\article_pipeline.py", line 19, in run\n    self.reader.mark_processed(ids)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\queue\\db_queue_reader.py", line 61, in mark_processed\n    conn.execute(\n    ~~~~~~~~~~~~^\n        sa.text("UPDATE dbo.article_queue SET status = \'processed\' WHERE id IN :ids"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        {"ids": tuple(ids)},\n        ^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1419, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\sql\\elements.py", line 527, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1641, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<8 lines>...\n        cache_hit=cache_hit,\n    )\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1846, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1986, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 2363, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1967, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\default.py", line 952, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\nsqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ("A TVP\'s rows must be Sequence objects.", \'HY000\')\n[SQL: UPDATE dbo.article_queue SET status = \'processed\' WHERE id IN ?]\n[parameters: ((10, 11, 12, 13, 14, 15, 16, 17, 18),)]\n(Background on this error at: https://sqlalche.me/e/20/f405)\n']
+2026-05-12 14:17:28,368 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 9 new rows into dbo.articles
+2026-05-12 14:17:28,396 [MainThread  ] [INFO    ] [run_subscriber.py:51] Finished footyhub subscriber. Duration: 11.4s
+2026-05-13 10:34:07,431 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.footballtransfers.com/en/players/raheem-sterling]  competition=None club=Chelsea player=Raheem Sterling theme=Transfers
+2026-05-13 10:34:09,271 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.teamtalk.com/arsenal/transfer-news-wesley-roma-e]  competition=None club=Arsenal player=Wesley theme=Transfers
+2026-05-13 10:34:11,269 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.tntsports.co.uk/football/transfers/]  competition=Premier League club=None player=None theme=Transfers
+2026-05-13 10:34:12,380 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.footballdatabase.eu/en/transfers]  competition=None club=None player=Harry Charsley theme=Transfers
+2026-05-13 10:34:13,385 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.wslfootball.com/survey-results-round-two-what-co]  competition=None club=None player=None theme=None
+2026-05-13 10:34:14,906 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.youtube.com/watch?v=hAM2BgiaRfM]  competition=Premier League club=Arsenal player=Jurrien Timber theme=Injuries
+2026-05-13 10:34:16,532 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.rotowire.com/soccer/headlines/abdukodir-khusanov]  competition=Premier League club=Manchester City player=Abdukodir Khusanov theme=Injuries
+2026-05-13 10:34:17,670 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.espn.com/soccer/story/_/id/48749013/james-maddis]  competition=Europa League club=Tottenham Hotspur player=James Maddison theme=Injuries
+2026-05-13 10:34:18,993 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.squawka.com/us/epl-premier-league/premier-league]  competition=Premier League club=Arsenal player=Mikel Merino theme=Injuries
+2026-05-13 10:34:20,097 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.skysports.com/football/live-blog/11670/13025486/]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 10:34:22,059 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.footballtransfers.com/en/transfer-news/uk-premie]  competition=Premier League club=Chelsea player=Geovany Quenda theme=Transfers
+2026-05-13 10:34:23,696 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.youtube.com/watch?v=uMACXeuiAjw]  competition=None club=Liverpool player=Jeremy Jacquet theme=Transfers
+2026-05-13 10:34:24,830 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.espn.com/soccer/story/_/id/48750405/arsenal-ben-]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 10:34:25,953 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.skysports.com/football/news/11095/13543152/ben-w]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 10:34:27,226 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.tntsports.co.uk/football/premier-league/2025-202]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 10:34:27,228 [MainThread  ] [INFO    ] [claude_enricher.py:31] Enrichment complete — tagged: 15, failed: 0
+2026-05-13 10:34:27,410 [MainThread  ] [ERROR   ] [db_insert_handler.py:68] [DbInsertHandler] Failed to insert into dbo.articles
+Traceback (most recent call last):
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'theme'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'clubs_mentioned'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'players_mentioned'. (207)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Python\AI\FootyHub\utils\scraper\persistence\db_insert_handler.py", line 57, in handle
+    result = conn.execute(sa.text(insert_sql))
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'theme'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'clubs_mentioned'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'players_mentioned'. (207)")
+[SQL: 
+            INSERT INTO [dbo].[articles] ([source_type], [source_name], [source_record_id], [source_url], [title], [body_text], [published_at], [topic], [competition], [theme], [club], [player_name], [clubs_mentioned], [players_mentioned])
+            OUTPUT inserted.*
+            SELECT source.[source_type], source.[source_name], source.[source_record_id], source.[source_url], source.[title], source.[body_text], source.[published_at], source.[topic], source.[competition], source.[theme], source.[club], source.[player_name], source.[clubs_mentioned], source.[players_mentioned]
+            FROM [dbo].[articles_tmp_b9aa266eaf0f] AS source
+            WHERE NOT EXISTS (
+                SELECT 1 FROM [dbo].[articles] AS target
+                WHERE target.[source_type] = source.[source_type] AND target.[source_name] = source.[source_name] AND target.[source_record_id] = source.[source_record_id]
+            )
+        ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-13 10:34:27,438 [MainThread  ] [ERROR   ] [run_subscriber.py:54] [ProgrammingError('(pyodbc.ProgrammingError) (\'42S22\', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'theme\'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'clubs_mentioned\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'players_mentioned\'. (207)")'), 'Traceback (most recent call last):\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1967, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\default.py", line 952, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\npyodbc.ProgrammingError: (\'42S22\', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'theme\'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'clubs_mentioned\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'players_mentioned\'. (207)")\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "C:\\Python\\AI\\FootyHub\\runners\\run_subscriber.py", line 49, in run\n    ).run()\n      ~~~^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\article_pipeline.py", line 19, in run\n    self.writer.write(succeeded)\n    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\save\\article_writer.py", line 28, in write\n    self.handle(df)\n    ~~~~~~~~~~~^^^^\n  File "C:\\Python\\AI\\FootyHub\\utils\\scraper\\persistence\\db_insert_handler.py", line 57, in handle\n    result = conn.execute(sa.text(insert_sql))\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1419, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\sql\\elements.py", line 527, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1641, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<8 lines>...\n        cache_hit=cache_hit,\n    )\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1846, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1986, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 2363, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1967, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\default.py", line 952, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\nsqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) (\'42S22\', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'theme\'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'clubs_mentioned\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'players_mentioned\'. (207)")\n[SQL: \n            INSERT INTO [dbo].[articles] ([source_type], [source_name], [source_record_id], [source_url], [title], [body_text], [published_at], [topic], [competition], [theme], [club], [player_name], [clubs_mentioned], [players_mentioned])\n            OUTPUT inserted.*\n            SELECT source.[source_type], source.[source_name], source.[source_record_id], source.[source_url], source.[title], source.[body_text], source.[published_at], source.[topic], source.[competition], source.[theme], source.[club], source.[player_name], source.[clubs_mentioned], source.[players_mentioned]\n            FROM [dbo].[articles_tmp_b9aa266eaf0f] AS source\n            WHERE NOT EXISTS (\n                SELECT 1 FROM [dbo].[articles] AS target\n                WHERE target.[source_type] = source.[source_type] AND target.[source_name] = source.[source_name] AND target.[source_record_id] = source.[source_record_id]\n            )\n        ]\n(Background on this error at: https://sqlalche.me/e/20/f405)\n']
+2026-05-13 10:42:43,771 [MainThread  ] [WARNING ] [claude_enricher.py:26] Enricher failed https://www.footballtransfers.com/en/players/raheem-sterling: Connection error.
+2026-05-13 10:42:45,262 [MainThread  ] [WARNING ] [claude_enricher.py:26] Enricher failed https://www.teamtalk.com/arsenal/transfer-news-wesley-roma-exit-tottenham-battle-52-million: Connection error.
+2026-05-13 10:42:46,673 [MainThread  ] [WARNING ] [claude_enricher.py:26] Enricher failed https://www.tntsports.co.uk/football/transfers/: Connection error.
+2026-05-13 10:42:48,097 [MainThread  ] [WARNING ] [claude_enricher.py:26] Enricher failed https://www.footballdatabase.eu/en/transfers: Connection error.
+2026-05-13 10:57:35,024 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.footballtransfers.com/en/players/raheem-sterling]  competition=None club=Chelsea player=Raheem Sterling theme=Transfers
+2026-05-13 10:57:36,655 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.teamtalk.com/arsenal/transfer-news-wesley-roma-e]  competition=None club=Arsenal player=Wesley theme=Transfers
+2026-05-13 10:57:37,873 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.tntsports.co.uk/football/transfers/]  competition=Premier League club=None player=None theme=Transfers
+2026-05-13 10:57:39,001 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.footballdatabase.eu/en/transfers]  competition=None club=None player=Harry Charsley theme=Transfers
+2026-05-13 10:57:39,975 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.wslfootball.com/survey-results-round-two-what-co]  competition=None club=None player=None theme=None
+2026-05-13 10:57:41,356 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.youtube.com/watch?v=hAM2BgiaRfM]  competition=Premier League club=Arsenal player=Jurrien Timber theme=Injuries
+2026-05-13 10:57:42,728 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.rotowire.com/soccer/headlines/abdukodir-khusanov]  competition=Premier League club=Manchester City player=Abdukodir Khusanov theme=Injuries
+2026-05-13 10:57:43,744 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.espn.com/soccer/story/_/id/48749013/james-maddis]  competition=Europa League club=Tottenham Hotspur player=James Maddison theme=Injuries
+2026-05-13 10:57:45,024 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.squawka.com/us/epl-premier-league/premier-league]  competition=Premier League club=Arsenal player=Mikel Merino theme=Injuries
+2026-05-13 10:57:46,171 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.skysports.com/football/live-blog/11670/13025486/]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 10:57:47,633 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.footballtransfers.com/en/transfer-news/uk-premie]  competition=Premier League club=Chelsea player=Geovany Quenda theme=Transfers
+2026-05-13 10:57:49,039 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.youtube.com/watch?v=uMACXeuiAjw]  competition=None club=Liverpool player=Jeremy Jacquet theme=Transfers
+2026-05-13 10:57:50,067 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.espn.com/soccer/story/_/id/48750405/arsenal-ben-]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 10:57:54,564 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.skysports.com/football/news/11095/13543152/ben-w]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 10:57:59,405 [MainThread  ] [INFO    ] [claude_enricher.py:18] Tagged [https://www.tntsports.co.uk/football/premier-league/2025-202]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 10:57:59,406 [MainThread  ] [INFO    ] [claude_enricher.py:31] Enrichment complete — tagged: 15, failed: 0
+2026-05-13 10:58:02,847 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 15 new rows into dbo.articles
+2026-05-13 10:58:02,866 [MainThread  ] [INFO    ] [run_subscriber.py:51] Finished footyhub subscriber. Duration: 29.6s
+2026-05-13 13:44:05,383 [MainThread  ] [INFO    ] [enricher.py:39] Enrichment complete — tagged: 0, failed: 0
+2026-05-13 13:44:05,405 [MainThread  ] [INFO    ] [run_subscriber.py:53] Finished footyhub subscriber. Duration: 0.9s
+2026-05-13 13:55:53,329 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.sportsmole.co.uk/football/man-city/injury-news/n]  competition=Premier League club=Manchester City player=Rodri theme=Injuries
+2026-05-13 13:55:54,711 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.espn.com/soccer/story/_/id/48756342/aston-villa-]  competition=Premier League club=Liverpool player=Alisson Becker theme=Injuries
+2026-05-13 13:55:55,831 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.premierleague.com/en/news/4656481/the-briefing-p]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 13:55:56,962 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.fantasyfootballhub.co.uk/premier-league-predicte]  competition=Premier League club=None player=Mike Jackson theme=Injuries
+2026-05-13 13:55:58,398 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.footballtransfers.com/en/transfer-news/uk-premie]  competition=Premier League club=Chelsea player=Geovany Quenda theme=Transfers
+2026-05-13 13:56:00,041 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.youtube.com/watch?v=XioGLx1OtrI]  competition=None club=Liverpool player=Jacquet theme=Transfers
+2026-05-13 13:56:01,065 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.skysports.com/football/live-blog/31771/12476234/]  competition=None club=Manchester City player=Phil Foden theme=Transfers
+2026-05-13 13:56:02,082 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.newsnow.com/ng/Sport/Football/Premier+League/Tra]  competition=Premier League club=Manchester United player=None theme=Transfers
+2026-05-13 13:56:03,310 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.sportbotai.com/news/liverpool-vs-chelsea-premier]  competition=Premier League club=Liverpool player=None theme=Fixtures
+2026-05-13 13:56:04,335 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.iwebscraping.com/football-data-extraction-sports]  competition=Premier League club=None player=None theme=Tactics
+2026-05-13 13:56:05,368 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.foodbodyself.co.uk/author/content/page/53/]  competition=Premier League club=None player=None theme=Tactics
+2026-05-13 13:56:06,990 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.espn.com/soccer/story/_/id/48750405/arsenal-ben-]  competition=Premier League club=Arsenal player=Ben White theme=Injuries
+2026-05-13 13:56:08,229 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.sportingnews.com/us/soccer/manchester-city/news/]  competition=Premier League club=Manchester City player=Rodri theme=Injuries
+2026-05-13 13:56:09,660 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.liverpoolfc.com/news/liverpools-injury-list-susp]  competition=Champions League club=Liverpool player=Stefan Bajcetic theme=Injuries
+2026-05-13 13:56:10,888 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.rotowire.com/soccer/headlines/eric-bailly-injury]  competition=None club=None player=Eric Bailly theme=Injuries
+2026-05-13 13:56:12,323 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.mancity.com/citytv/mens/manchester-city-brentfor]  competition=Premier League club=Manchester City player=None theme=Results
+2026-05-13 13:56:13,449 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.mancity.com/citytv/mens/manchester-city-brentfor]  competition=Premier League club=Manchester City player=None theme=Results
+2026-05-13 13:56:14,576 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.youtube.com/watch?v=nZnNhLazq4w]  competition=Premier League club=Manchester City player=Jérémy Doku theme=Results
+2026-05-13 13:56:15,601 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.thechelseachronicle.com/news/arne-slot-could-be-]  competition=Premier League club=Liverpool player=Arne Slot theme=Managers
+2026-05-13 13:56:16,726 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://thefootballfreak.com/xabi-alonso-emerges-as-a-leadin]  competition=Premier League club=Chelsea player=Xabi Alonso theme=Managers
+2026-05-13 13:56:17,852 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.givemesport.com/ranking-premier-league-manager-s]  competition=Premier League club=None player=None theme=Managers
+2026-05-13 13:56:19,081 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.skysports.com/champions-league]  competition=Champions League club=Arsenal player=None theme=Results
+2026-05-13 13:56:20,166 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.psg.fr/en/content/uefa-champions-league-semi-fin]  competition=Champions League club=Arsenal player=None theme=Fixtures
+2026-05-13 13:56:21,162 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.uefa.com/uefachampionsleague/clubs/1652--tottenh]  competition=Champions League club=Tottenham Hotspur player=None theme=None
+2026-05-13 13:56:22,359 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.skysports.com/europa-league]  competition=Europa League club=Aston Villa player=None theme=Results
+2026-05-13 13:56:23,382 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.nbcsports.com/soccer/news/europa-league-knockout]  competition=Europa League club=Aston Villa player=None theme=Fixtures
+2026-05-13 13:56:24,609 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.sportingnews.com/us/soccer/news/europa-league-kn]  competition=Europa League club=Aston Villa player=None theme=Results
+2026-05-13 13:56:26,046 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://en.as.com/resultados/futbol/europa_league/jornada/]  competition=Europa League club=Aston Villa player=None theme=Fixtures
+2026-05-13 13:56:27,276 [MainThread  ] [INFO    ] [enricher.py:24] Tagged [https://www.uefa.com/uefaeuropaleague/news/029c-1e9ad67620f2]  competition=Europa League club=Aston Villa player=None theme=Fixtures
+2026-05-13 13:56:27,278 [MainThread  ] [INFO    ] [enricher.py:39] Enrichment complete — tagged: 29, failed: 0
+2026-05-13 13:56:27,549 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 29 new rows into dbo.articles
+2026-05-13 13:56:27,585 [MainThread  ] [INFO    ] [run_subscriber.py:53] Finished footyhub subscriber. Duration: 36.8s

@@ -1,0 +1,183 @@
+2026-05-12 14:00:54,822 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League breaking news injuries manager updates team news
+2026-05-12 14:00:59,474 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:00:59,485 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League transfer news confirmed transfers transfer rumours contracts
+2026-05-12 14:01:03,863 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:01:03,870 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League tactical analysis xG pressing formations football analytics
+2026-05-12 14:01:18,949 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:01:18,954 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League injury news expected return team news press conference
+2026-05-12 14:01:25,068 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:01:51,225 [MainThread  ] [ERROR   ] [db_insert_handler.py:68] [DbInsertHandler] Failed to insert into dbo.article_queue
+Traceback (most recent call last):
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'source_record_id'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'source_record_id'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'competition'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'club'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'player_name'. (207)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Python\AI\FootyHub\utils\scraper\persistence\db_insert_handler.py", line 57, in handle
+    result = conn.execute(sa.text(insert_sql))
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Jonat\anaconda3\envs\Streamsight\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'source_record_id'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'source_record_id'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'competition'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'club'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'player_name'. (207)")
+[SQL: 
+            INSERT INTO [dbo].[article_queue] ([source_type], [source_name], [source_record_id], [source_url], [title], [body_text], [published_at], [topic], [competition], [club], [player_name], [status])
+            OUTPUT inserted.*
+            SELECT source.[source_type], source.[source_name], source.[source_record_id], source.[source_url], source.[title], source.[body_text], source.[published_at], source.[topic], source.[competition], source.[club], source.[player_name], source.[status]
+            FROM [dbo].[article_queue_tmp_3f45e5a3fd5b] AS source
+            WHERE NOT EXISTS (
+                SELECT 1 FROM [dbo].[article_queue] AS target
+                WHERE target.[source_type] = source.[source_type] AND target.[source_name] = source.[source_name] AND target.[source_record_id] = source.[source_record_id]
+            )
+        ]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-05-12 14:01:51,245 [MainThread  ] [ERROR   ] [run_publisher.py:48] [ProgrammingError('(pyodbc.ProgrammingError) (\'42S22\', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'source_record_id\'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'source_record_id\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'competition\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'club\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'player_name\'. (207)")'), 'Traceback (most recent call last):\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1967, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\default.py", line 952, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\npyodbc.ProgrammingError: (\'42S22\', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'source_record_id\'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'source_record_id\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'competition\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'club\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'player_name\'. (207)")\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "C:\\Python\\AI\\FootyHub\\runners\\run_publisher.py", line 43, in run\n    ).run()\n      ~~~^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\article_pipeline.py", line 15, in run\n    self.writer.write(result)\n    ~~~~~~~~~~~~~~~~~^^^^^^^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\queue\\db_queue_writer.py", line 32, in write\n    self.handle(pd.DataFrame(rows)[_DB_COLS])\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Python\\AI\\FootyHub\\utils\\scraper\\persistence\\db_insert_handler.py", line 57, in handle\n    result = conn.execute(sa.text(insert_sql))\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1419, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\sql\\elements.py", line 527, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1641, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<8 lines>...\n        cache_hit=cache_hit,\n    )\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1846, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1986, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 2363, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\base.py", line 1967, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\site-packages\\sqlalchemy\\engine\\default.py", line 952, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\nsqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) (\'42S22\', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'source_record_id\'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'source_record_id\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'competition\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'club\'. (207); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name \'player_name\'. (207)")\n[SQL: \n            INSERT INTO [dbo].[article_queue] ([source_type], [source_name], [source_record_id], [source_url], [title], [body_text], [published_at], [topic], [competition], [club], [player_name], [status])\n            OUTPUT inserted.*\n            SELECT source.[source_type], source.[source_name], source.[source_record_id], source.[source_url], source.[title], source.[body_text], source.[published_at], source.[topic], source.[competition], source.[club], source.[player_name], source.[status]\n            FROM [dbo].[article_queue_tmp_3f45e5a3fd5b] AS source\n            WHERE NOT EXISTS (\n                SELECT 1 FROM [dbo].[article_queue] AS target\n                WHERE target.[source_type] = source.[source_type] AND target.[source_name] = source.[source_name] AND target.[source_record_id] = source.[source_record_id]\n            )\n        ]\n(Background on this error at: https://sqlalche.me/e/20/f405)\n']
+2026-05-12 14:02:42,830 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League breaking news injuries manager updates team news
+2026-05-12 14:02:47,318 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:02:47,320 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League transfer news confirmed transfers transfer rumours contracts
+2026-05-12 14:02:54,983 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:02:54,987 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League tactical analysis xG pressing formations football analytics
+2026-05-12 14:03:00,151 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:03:00,153 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League injury news expected return team news press conference
+2026-05-12 14:03:06,147 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:03:06,494 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 9 new rows into dbo.article_queue
+2026-05-12 14:03:06,499 [MainThread  ] [INFO    ] [run_publisher.py:45] Finished footyhub publisher. Duration: 23.7s
+2026-05-12 14:05:54,225 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League breaking news injuries manager updates team news
+2026-05-12 14:05:58,605 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:05:58,606 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League transfer news confirmed transfers transfer rumours contracts
+2026-05-12 14:06:04,644 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:06:04,646 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League tactical analysis xG pressing formations football analytics
+2026-05-12 14:06:10,477 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:06:10,478 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League injury news expected return team news press conference
+2026-05-12 14:06:38,260 [MainThread  ] [INFO    ] [_client.py:1025] HTTP Request: POST https://api.perplexity.ai/chat/completions "HTTP/1.1 200 OK"
+2026-05-12 14:06:38,562 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 9 new rows into dbo.article_queue
+2026-05-12 14:06:38,566 [MainThread  ] [INFO    ] [run_publisher.py:45] Finished footyhub publisher. Duration: 44.3s
+2026-05-13 10:32:31,664 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League breaking news injuries manager updates team news
+2026-05-13 10:32:35,419 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League transfer news confirmed transfers transfer rumours contracts
+2026-05-13 10:32:44,609 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League tactical analysis xG pressing formations football analytics
+2026-05-13 10:32:53,485 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League injury news expected return team news press conference
+2026-05-13 10:33:03,858 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 6 new rows into dbo.article_queue
+2026-05-13 10:33:03,890 [MainThread  ] [INFO    ] [run_publisher.py:48] Finished footyhub publisher. Duration: 32.2s
+2026-05-13 11:23:56,096 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League breaking news injuries manager updates team news
+2026-05-13 11:23:59,978 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [3] https://www.skysports.com/football/live-blog/31771/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours — using full content as fallback
+2026-05-13 11:23:59,979 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League transfer news confirmed transfers transfer rumours contracts
+2026-05-13 11:24:03,751 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [3] https://www.tntsports.co.uk/football/transfers/ — using full content as fallback
+2026-05-13 11:24:03,752 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [4] https://www.footballdatabase.eu/en/transfers — using full content as fallback
+2026-05-13 11:24:03,752 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League tactical analysis xG pressing formations football analytics
+2026-05-13 11:24:09,795 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League injury news expected return team news press conference
+2026-05-13 11:24:18,333 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [5] https://allaboutfpl.com/category/fpl-press-conference-updates/ — using full content as fallback
+2026-05-13 11:24:18,336 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [6] https://www.youtube.com/watch?v=1sItjqLzirA — using full content as fallback
+2026-05-13 11:24:18,337 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League match reports goals highlights weekend results
+2026-05-13 11:24:22,810 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League manager news press conference sacking appointment
+2026-05-13 11:24:26,899 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Champions League latest news results fixtures draw
+2026-05-13 11:24:34,474 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [4] https://www.365scores.com/en-us/football/league/uefa-champions-league-572 — using full content as fallback
+2026-05-13 11:24:34,475 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [5] https://tribuna.com/en/league/ucl/ — using full content as fallback
+2026-05-13 11:24:34,477 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Europa League latest news results fixtures draw
+2026-05-13 11:24:46,864 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [5] https://en.as.com/resultados/futbol/europa_league/jornada/ — using full content as fallback
+2026-05-13 11:24:46,866 [MainThread  ] [WARNING ] [perplexity_search.py:47] No citation text for [7] https://theanalyst.com/competition/uefa-europa-league — using full content as fallback
+2026-05-13 11:24:47,350 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 34 new rows into dbo.article_queue
+2026-05-13 11:24:47,359 [MainThread  ] [INFO    ] [run_publisher.py:48] Finished footyhub publisher. Duration: 51.3s
+2026-05-13 11:38:28,894 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League breaking news injuries manager updates team news
+2026-05-13 11:38:33,955 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: latest Premier League transfer news confirmed transfers transfer rumours contracts
+2026-05-13 11:38:37,641 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League tactical analysis xG pressing formations football analytics
+2026-05-13 11:38:43,249 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League injury news expected return team news press conference
+2026-05-13 11:38:51,770 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League match reports goals highlights weekend results
+2026-05-13 11:38:56,994 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Premier League manager news press conference sacking appointment
+2026-05-13 11:39:00,470 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Champions League latest news results fixtures draw
+2026-05-13 11:39:07,435 [MainThread  ] [INFO    ] [web_search_reader.py:20] Searching: Europa League latest news results fixtures draw
+2026-05-13 11:39:12,044 [MainThread  ] [WARNING ] [perplexity_search.py:50] Skipping [5] https://www.sportingnews.com/us/europa-league — citation text too short (0 chars)
+2026-05-13 11:39:12,047 [MainThread  ] [WARNING ] [perplexity_search.py:50] Skipping [6] https://www.uefa.com/uefaeuropaleague/clubs/52682--man-utd/ — citation text too short (0 chars)
+2026-05-13 11:39:12,048 [MainThread  ] [WARNING ] [perplexity_search.py:50] Skipping [7] https://theanalyst.com/competition/uefa-europa-league — citation text too short (0 chars)
+2026-05-13 11:39:12,651 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 14 new rows into dbo.article_queue
+2026-05-13 11:39:12,661 [MainThread  ] [INFO    ] [run_publisher.py:48] Finished footyhub publisher. Duration: 43.8s
+2026-05-13 12:09:14,572 [MainThread  ] [ERROR   ] [run_publisher.py:51] [JSONDecodeError('Expecting value: line 1 column 1 (char 0)'), 'Traceback (most recent call last):\n  File "C:\\Python\\AI\\FootyHub\\runners\\run_publisher.py", line 37, in run\n    reader=FootballPerplexitySearch(\n           ~~~~~~~~~~~~~~~~~~~~~~~~^\n        api_key=os.getenv("PERPLEXITY_API_KEY"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n        seen_urls_path=settings.SEEN_URLS_PATH,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ),\n    ^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\read\\perplexity_search.py", line 20, in __init__\n    super().__init__(topics, seen_urls_path)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\read\\web_search_reader.py", line 20, in __init__\n    self._seen: dict[str, str] = self._load_seen_urls()\n                                 ~~~~~~~~~~~~~~~~~~~~^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\read\\web_search_reader.py", line 50, in _load_seen_urls\n    raw = json.loads(self.seen_urls_path.read_text())\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\json\\__init__.py", line 352, in loads\n    return _default_decoder.decode(s)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\json\\decoder.py", line 345, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\json\\decoder.py", line 363, in raw_decode\n    raise JSONDecodeError("Expecting value", s, err.value) from None\njson.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\n']
+2026-05-13 12:10:39,935 [MainThread  ] [ERROR   ] [run_publisher.py:51] [JSONDecodeError('Expecting value: line 1 column 1 (char 0)'), 'Traceback (most recent call last):\n  File "C:\\Python\\AI\\FootyHub\\runners\\run_publisher.py", line 37, in run\n    reader=FootballPerplexitySearch(\n           ~~~~~~~~~~~~~~~~~~~~~~~~^\n        api_key=os.getenv("PERPLEXITY_API_KEY"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n        seen_urls_path=settings.SEEN_URLS_PATH,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ),\n    ^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\read\\perplexity_search.py", line 20, in __init__\n    super().__init__(topics, seen_urls_path)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\read\\web_search_reader.py", line 20, in __init__\n    self._seen: dict[str, str] = self._load_seen_urls()\n                                 ~~~~~~~~~~~~~~~~~~~~^^\n  File "C:\\Python\\AI\\FootyHub\\listeners\\read\\web_search_reader.py", line 50, in _load_seen_urls\n    raw = json.loads(self.seen_urls_path.read_text())\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\json\\__init__.py", line 352, in loads\n    return _default_decoder.decode(s)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\json\\decoder.py", line 345, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\Jonat\\anaconda3\\envs\\Streamsight\\Lib\\json\\decoder.py", line 363, in raw_decode\n    raise JSONDecodeError("Expecting value", s, err.value) from None\njson.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\n']
+2026-05-13 13:50:53,880 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: latest Premier League breaking news injuries manager updates team news
+2026-05-13 13:51:00,004 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: latest Premier League transfer news confirmed transfers transfer rumours contracts
+2026-05-13 13:51:08,040 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [3] https://www.youtube.com/watch?v=H46v7fmH73g — citation text too short (44 chars)
+2026-05-13 13:51:08,042 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [6] https://thescore.com/epl/news/3473849 — citation text too short (0 chars)
+2026-05-13 13:51:08,043 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [7] https://www.footballdatabase.eu/en/transfers — citation text too short (0 chars)
+2026-05-13 13:51:08,043 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [8] https://www.tntsports.co.uk/football/transfers/ — citation text too short (0 chars)
+2026-05-13 13:51:08,044 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Premier League tactical analysis xG pressing formations football analytics
+2026-05-13 13:51:14,545 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Premier League injury news expected return team news press conference
+2026-05-13 13:51:21,915 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Premier League match reports goals highlights weekend results
+2026-05-13 13:51:28,162 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [4] https://www.youtube.com/watch?v=VzR2QxfNY6Y — citation text too short (0 chars)
+2026-05-13 13:51:28,165 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [5] https://www.youtube.com/watch?v=ew2mkG93z6s — citation text too short (0 chars)
+2026-05-13 13:51:28,167 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [6] https://www.youtube.com/watch?v=BfgUHcJQFrA — citation text too short (0 chars)
+2026-05-13 13:51:28,169 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [7] https://www.youtube.com/watch?v=To2ADtUbE4E — citation text too short (0 chars)
+2026-05-13 13:51:28,170 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Premier League manager news press conference sacking appointment
+2026-05-13 13:51:34,060 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Champions League latest news results fixtures draw
+2026-05-13 13:51:40,215 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [3] https://theanalyst.com/competition/uefa-champions-league — citation text too short (0 chars)
+2026-05-13 13:51:40,217 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [4] https://www.uefa.com/uefachampionsleague/competition-format/ — citation text too short (0 chars)
+2026-05-13 13:51:40,218 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [5] https://tribuna.com/en/league/ucl/ — citation text too short (0 chars)
+2026-05-13 13:51:40,220 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Europa League latest news results fixtures draw
+2026-05-13 13:51:48,106 [MainThread  ] [WARNING ] [perplexity_search.py:52] Skipping [5] https://theanalyst.com/competition/uefa-europa-league — citation text too short (0 chars)
+2026-05-13 13:51:48,800 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 29 new rows into dbo.article_queue
+2026-05-13 13:51:48,816 [MainThread  ] [INFO    ] [run_publisher.py:63] Finished footyhub publisher. Duration: 54.9s
+2026-05-13 14:21:13,894 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: latest Premier League breaking news injuries manager updates team news
+2026-05-13 14:21:20,890 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: latest Premier League transfer news confirmed transfers transfer rumours contracts
+2026-05-13 14:21:24,333 [MainThread  ] [WARNING ] [perplexity_search.py:58] Skipping [5] https://www.thescore.com/epl/news/3473849/latest-transfer-news-and-rumors-arsenal-man-city-compete-for-attacker — citation text too short (0 chars)
+2026-05-13 14:21:24,334 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Premier League tactical analysis xG pressing formations football analytics
+2026-05-13 14:21:29,067 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Premier League injury news expected return team news press conference
+2026-05-13 14:21:36,089 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Premier League match reports goals highlights weekend results
+2026-05-13 14:21:41,055 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Premier League manager news press conference sacking appointment
+2026-05-13 14:21:45,793 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Champions League latest news results fixtures draw
+2026-05-13 14:21:50,255 [MainThread  ] [WARNING ] [perplexity_search.py:58] Skipping [4] https://theanalyst.com/competition/uefa-champions-league — citation text too short (0 chars)
+2026-05-13 14:21:50,256 [MainThread  ] [WARNING ] [perplexity_search.py:58] Skipping [5] https://www.uefa.com/uefachampionsleague/competition-format/ — citation text too short (0 chars)
+2026-05-13 14:21:50,257 [MainThread  ] [WARNING ] [perplexity_search.py:58] Skipping [6] https://tribuna.com/en/league/ucl/ — citation text too short (0 chars)
+2026-05-13 14:21:50,258 [MainThread  ] [INFO    ] [web_search_reader.py:27] Searching: Europa League latest news results fixtures draw
+2026-05-13 14:21:59,125 [MainThread  ] [WARNING ] [perplexity_search.py:58] Skipping [5] https://en.as.com/resultados/futbol/europa_league/jornada/ — citation text too short (0 chars)
+2026-05-13 14:21:59,126 [MainThread  ] [WARNING ] [perplexity_search.py:58] Skipping [6] https://theanalyst.com/competition/uefa-europa-league — citation text too short (0 chars)
+2026-05-13 14:21:59,739 [MainThread  ] [INFO    ] [db_insert_handler.py:63] [DbInsertHandler] Inserted 23 new rows into dbo.article_queue
+2026-05-13 14:21:59,744 [MainThread  ] [INFO    ] [run_publisher.py:64] Finished footyhub publisher. Duration: 45.9s

@@ -1,0 +1,33 @@
+<div id="chat-panel" class="chat-panel hidden">
+    <div class="chat-header">
+        <span>FootyHub AI</span>
+        <button onclick="toggleChat()" class="chat-close">✕</button>
+    </div>
+    <div id="chat-messages" class="chat-messages">
+        {% if not chat_history %}
+        <div class="chat-msg chat-msg--assistant" data-rendered="true">
+            <strong>Hey! Ask me anything about football.</strong>
+            <ul>
+                <li>Latest news for a club — <em>"What's the latest Arsenal news?"</em></li>
+                <li>Transfer rumours — <em>"Any signings this week?"</em></li>
+                <li>Match results — <em>"How did Liverpool do?"</em></li>
+                <li>Injuries — <em>"Who is injured at Man City?"</em></li>
+            </ul>
+            I'll search the FootyHub database to answer.
+        </div>
+        {% endif %}
+        {% for msg in chat_history %}
+        <div class="chat-msg chat-msg--{{ msg.role }}">{{ msg.content }}</div>
+        {% endfor %}
+    </div>
+    <form hx-post="/chat/send"
+          hx-target="#chat-messages"
+          hx-swap="beforeend"
+          hx-on::after-request="this.querySelector('input[name=message]').value=''"
+        >
+        <input type="text" name="message" placeholder="Ask about football..." autocomplete="off">
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<button class="chat-fab" onclick="toggleChat()">💬</button>

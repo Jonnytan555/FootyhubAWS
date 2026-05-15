@@ -1,0 +1,43 @@
+FOOTBALL_TREE = {
+    "Premier League": {
+        "clubs": [
+            "Arsenal",
+            "Aston Villa",
+            "Bournemouth",
+            "Brentford",
+            "Brighton & Hove Albion",
+            "Chelsea",
+            "Crystal Palace",
+            "Everton",
+            "Fulham",
+            "Ipswich Town",
+            "Leicester City",
+            "Liverpool",
+            "Manchester City",
+            "Manchester United",
+            "Newcastle United",
+            "Nottingham Forest",
+            "Southampton",
+            "Tottenham Hotspur",
+            "West Ham United",
+            "Wolverhampton Wanderers",
+        ],
+        "themes": [
+            "Transfers",
+            "Injuries",
+            "Tactics",
+            "Managers",
+            "Fixtures",
+            "Results",
+            "Finance",
+        ],
+    },
+    "Champions League": {
+        "clubs": [],
+        "themes": ["Transfers", "Tactics", "Results", "Fixtures"],
+    },
+    "Europa League": {
+        "clubs": [],
+        "themes": ["Transfers", "Tactics", "Results", "Fixtures"],
+    },
+}

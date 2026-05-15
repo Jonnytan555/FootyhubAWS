@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="feed-tabs">
+    <button class="feed-tab active"
+            hx-get="/articles"
+            hx-target="#article-list"
+            hx-include="#filters"
+            onclick="setFeedTab(this)">All</button>
+    {% if current_user %}
+    <button class="feed-tab"
+            hx-get="/articles"
+            hx-target="#article-list"
+            hx-include="#filters"
+            hx-vals='{"liked_only": "1"}'
+            onclick="setFeedTab(this)">♥ Liked</button>
+    {% endif %}
+</div>
+
+<form id="filters" style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+    <select id="filter-competition" name="competition"
+            hx-get="/articles"
+            hx-target="#article-list"
+            hx-trigger="change"
+            hx-include="#filters">
+        <option value="">All competitions</option>
+        {% for c in competitions %}
+        <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+
+    <select id="filter-club" name="club"
+            hx-get="/articles"
+            hx-target="#article-list"
+            hx-trigger="change"
+            hx-include="#filters">
+        <option value="">All clubs</option>
+        {% for c in clubs %}
+        <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+
+    <select id="filter-theme" name="theme"
+            hx-get="/articles"
+            hx-target="#article-list"
+            hx-trigger="change"
+            hx-include="#filters">
+        <option value="">All themes</option>
+        {% for t in themes %}
+        <option value="{{ t }}">{{ t }}</option>
+        {% endfor %}
+    </select>
+</form>
+
+<div id="article-list">
+    {% include "partials/article_list.html" %}
+</div>
+{% endblock %}

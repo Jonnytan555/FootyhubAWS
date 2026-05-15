@@ -1,0 +1,17 @@
+anthropic
+APScheduler
+fastapi
+httpx
+jinja2
+python-jose[cryptography]
+pandas
+passlib[bcrypt]
+bcrypt==3.2.2
+pydantic
+python-dotenv
+python-multipart
+requests
+SQLAlchemy
+stomp.py
+uvicorn
+pyodbc

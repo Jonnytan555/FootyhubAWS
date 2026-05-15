@@ -1,0 +1,29 @@
+{% for a in articles %}
+<div class="card">
+    <div class="card-meta">
+        {% if a.competition %}<span class="tag">{{ a.competition }}</span>{% endif %}
+        {% if a.club %}<span class="tag">{{ a.club }}</span>{% endif %}
+        {% if a.theme %}<span class="tag tag--theme">{{ a.theme }}</span>{% endif %}
+    </div>
+
+    <details>
+        <summary>{{ a.body_text.split('. ')[0] }}.</summary>
+        <p class="card-body">{{ a.body_text }}</p>
+        <a class="card-source" href="{{ a.source_url }}" target="_blank">Read original article →</a>
+    </details>
+
+    <p class="card-footer">
+        {{ a.published_at }}
+        {% if a.players_mentioned %} · {{ a.players_mentioned }}{% endif %}
+        {% if current_user %}
+        <button id="like-{{ a.id }}"
+                hx-post="/like/{{ a.id }}"
+                hx-target="#like-{{ a.id }}"
+                hx-swap="outerHTML"
+                class="like-btn">{% if a.liked %}♥{% else %}♡{% endif %}</button>
+        {% endif %}
+    </p>
+</div>
+{% else %}
+<p>No articles found.</p>
+{% endfor %}

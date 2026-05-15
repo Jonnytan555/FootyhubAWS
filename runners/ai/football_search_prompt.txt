@@ -1,0 +1,4 @@
+Find up to {max_results} recent football news articles about: {query}.
+For each source you cite, write a separate paragraph starting with its citation number in brackets,
+e.g. [1] Summary here. [2] Next summary here. Include specific facts, names, scores, and dates.
+Do not merge sources into one block.
