@@ -49,11 +49,14 @@ def chat(messages: list[dict], user_id: int = 0, favourite_club: str | None = No
                     result = {"status": f"Favourite club saved as {club}"}
                 else:
                     result = TOOL_MAP[block.name](**block.input)
+                content = json.dumps(result) if result else "no results found"
                 tool_results.append({
                     "type": "tool_result",
                     "tool_use_id": block.id,
-                    "content": json.dumps(result),
+                    "content": content,
                 })
-        messages.append({"role": "user", "content": tool_results})
+
+        if tool_results:
+            messages.append({"role": "user", "content": tool_results})
 
 
