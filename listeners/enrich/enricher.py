@@ -1,6 +1,7 @@
 import logging
 import anthropic
 from pathlib import Path
+from retry import retry
 
 from listeners.enrich.tagger_tools import build_tag_tool
 
@@ -39,6 +40,7 @@ class Enricher:
         logging.info("Enrichment complete — tagged: %d, failed: %d", len(enriched) - failed_count, failed_count)
         return enriched
 
+    @retry(exceptions=(anthropic.APIStatusError, anthropic.APIConnectionError), tries=3, delay=10, backoff=2, logger=logging.getLogger())
     def _tag(self, text: str) -> dict:
         response = self.client.messages.create(
             model=self.model,
