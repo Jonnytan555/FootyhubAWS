@@ -106,7 +106,12 @@ api/
 
 listeners/                    — subscriber pipeline (SQS → enrich → save)
   queue/sqs/                  — SQSQueueConsumer + SQSQueueWriter
+  enrich/                     — Claude enrichment (tagging)
+  save/                       — ArticleWriter (PostgreSQL insert)
 runners/                      — publisher + scheduler
+  appsettings.py              — shared config (loads .env)
+  run_publisher.py            — fetch articles → SQS
+  run_subscriber.py           — SQS → enrich → save
 sql/
   postgres_schema.sql         — database table definitions
 deploy/
@@ -114,7 +119,10 @@ deploy/
   footyhub-scheduler.service  — systemd service (scheduler)
   nginx.conf                  — nginx reverse proxy config
   iam-policy.json             — IAM policy for EC2 role
-utils/                        — shared DB utilities
+utils/
+  db/db_access.py             — build_engine() for PostgreSQL
+  logging/logger.py           — rotating file + stream logger
+  scraper/persistence/        — db_insert_handler (upsert logic)
 ```
 
 ---
@@ -123,7 +131,7 @@ utils/                        — shared DB utilities
 
 ### 1. Launch EC2 instance
 
-- **AMI:** Ubuntu 22.04 LTS
+- **AMI:** Ubuntu 22.04 LTS (or 24.04 — see Python note below)
 - **Instance type:** t3.micro (free tier)
 - **Key pair:** create and download `.pem` file — keep it safe
 - **Security group inbound rules:**
@@ -137,7 +145,7 @@ utils/                        — shared DB utilities
 ssh -i "C:\path\to\your-key.pem" ubuntu@<ec2-public-ip>
 ```
 
-### 3. Install dependencies
+### 3. Install system dependencies
 
 ```bash
 sudo apt update && sudo apt install -y python3-pip python3-venv postgresql nginx git
@@ -181,7 +189,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-> **Note:** Ubuntu 26.04 ships with Python 3.14. Some package versions are incompatible — run this after install:
+> **Important — Python 3.14 compatibility:**
+> Ubuntu 26.04 ships with Python 3.14. Pin these versions after install:
 > ```bash
 > pip install "fastapi==0.115.5" "starlette==0.41.3"
 > ```
@@ -210,7 +219,12 @@ DB_PASSWORD=...
 
 SQS_QUEUE_URL=https://sqs.eu-west-2.amazonaws.com/YOUR_ACCOUNT_ID/footyhub-articles
 AWS_REGION=eu-west-2
+
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
 ```
+
+> **Note on AWS credentials:** The `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are only needed if the EC2 instance doesn't have an IAM role attached. If you attach an IAM role with SQS permissions, remove these lines and boto3 will use the role automatically.
 
 ### 9. Create SQS queue
 
@@ -219,27 +233,34 @@ In AWS Console → SQS → Create queue:
 - Name: `footyhub-articles`
 - Update `SQS_QUEUE_URL` in `.env` with the real URL
 
-### 10. Create IAM role for EC2
-
-The EC2 instance needs permission to read/write SQS. In AWS Console:
-1. IAM → Roles → Create role → EC2
-2. Attach the policy from `deploy/iam-policy.json` (replace `YOUR_ACCOUNT_ID`)
-3. Attach the role to the EC2 instance: **EC2 → Actions → Security → Modify IAM role**
-
-### 11. Run the app
+### 10. Test the pipeline manually
 
 ```bash
 source venv/bin/activate
 
-# Web server (test run)
-uvicorn api.app:app --host 0.0.0.0 --port 8000
-
-# Publisher (fetch articles → SQS)
+# Fetch articles from Perplexity → publish to SQS
 python -m runners.run_publisher
 
-# Subscriber (SQS → enrich → save to DB)
+# Consume from SQS → enrich with Claude → save to PostgreSQL
 python -m runners.run_subscriber
 ```
+
+Verify articles landed in the database:
+```bash
+sudo -u postgres psql -d footyhub
+```
+```sql
+SELECT id, club, competition, theme, published_at FROM articles ORDER BY id DESC LIMIT 10;
+\q
+```
+
+### 11. Test the web app
+
+```bash
+uvicorn api.app:app --host 0.0.0.0 --port 8000
+```
+
+Visit `http://<ec2-public-ip>:8000` — you should see the feed with articles and working chat.
 
 ### 12. Run as background services (systemd)
 
@@ -251,7 +272,7 @@ sudo systemctl enable footyhub-web footyhub-scheduler
 sudo systemctl start footyhub-web footyhub-scheduler
 ```
 
-Check status:
+Check both are running:
 ```bash
 sudo systemctl status footyhub-web
 sudo systemctl status footyhub-scheduler
@@ -265,6 +286,24 @@ sudo ln -s /etc/nginx/sites-available/footyhub /etc/nginx/sites-enabled/footyhub
 sudo rm -f /etc/nginx/sites-enabled/default
 sudo nginx -t && sudo systemctl reload nginx
 ```
+
+Visit `http://<ec2-public-ip>` (port 80) — nginx proxies to the app.
+
+---
+
+## Known Issues & Fixes Applied
+
+| Issue | Fix |
+|-------|-----|
+| Python 3.14 + Starlette 1.x Jinja2 cache bug | Pin `fastapi==0.115.5 starlette==0.41.3` |
+| `dbo.` SQL Server schema in PostgreSQL queries | Removed all `dbo.` prefixes; updated to PostgreSQL syntax (`RETURNING`, `LIMIT`, `DROP TABLE IF EXISTS`) |
+| `db_insert_handler.py` used SQL Server temp table pattern | Rewritten for PostgreSQL |
+| `run_publisher.py` / `run_subscriber.py` used removed SQL Server settings | Changed to `build_engine()` with no args (reads from env) |
+| `appsettings.py` read env vars before `.env` loaded | Added `load_dotenv()` at top of `appsettings.py` |
+| Perplexity API timeouts | Added `@retry` decorator (3 attempts, exponential backoff) |
+| Claude 529 overloaded errors during enrichment | Added `@retry` decorator to `_tag()` in enricher |
+| Empty tool result crashing Claude chat (400 error) | Guard against empty `tool_results`; fallback content `"no results found"` |
+| `logger` module not in repo | Added `utils/logging/logger.py` |
 
 ---
 
@@ -296,6 +335,7 @@ sudo systemctl restart footyhub-web footyhub-scheduler
 | `sudo systemctl restart footyhub-web` | Restart after code change |
 | `sudo nginx -t` | Test nginx config |
 | `sudo -u postgres psql -d footyhub` | Connect to database |
+| `SELECT count(*) FROM articles;` | Check article count |
 
 ---
 
