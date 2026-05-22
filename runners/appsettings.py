@@ -1,4 +1,6 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 SOURCE_NAME = "FootballNewsSites"
 SOURCE_TYPE = "football"
