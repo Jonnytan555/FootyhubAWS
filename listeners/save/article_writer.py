@@ -17,7 +17,7 @@ class ArticleWriter(DbInsertHandler):
         super().__init__(
             engine=engine,
             table_name="articles",
-            schema="dbo",
+            schema="public",
             key_cols=_KEY_COLS,
         )
 

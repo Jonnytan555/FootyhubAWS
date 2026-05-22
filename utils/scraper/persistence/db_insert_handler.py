@@ -20,28 +20,24 @@ class DbInsertHandler:
         self.key_cols = key_cols
 
     def handle(self, df: pd.DataFrame, dropNa: bool = False, dtypes=None, created_date: str = 'CreatedDate') -> list[dict]:
-        """Insert rows that don't already exist. Returns inserted rows as list[dict]."""
         if df is None or df.empty:
             return []
 
         temp = f"{self.table_name}_tmp_{uuid.uuid4().hex[:12]}"
         columns = df.columns.tolist()
-        col_list = ", ".join(f"[{c}]" for c in columns)
-        src_cols = ", ".join(f"source.[{c}]" for c in columns)
-
-        join_clause = " AND ".join(
-            f"target.[{c}] = source.[{c}]" for c in self.key_cols
-        )
+        col_list = ", ".join(f'"{c}"' for c in columns)
+        src_cols = ", ".join(f'source."{c}"' for c in columns)
+        join_clause = " AND ".join(f'target."{c}" = source."{c}"' for c in self.key_cols)
 
         insert_sql = f"""
-            INSERT INTO [{self.schema}].[{self.table_name}] ({col_list})
-            OUTPUT inserted.*
+            INSERT INTO "{self.schema}"."{self.table_name}" ({col_list})
             SELECT {src_cols}
-            FROM [{self.schema}].[{temp}] AS source
+            FROM "{self.schema}"."{temp}" AS source
             WHERE NOT EXISTS (
-                SELECT 1 FROM [{self.schema}].[{self.table_name}] AS target
+                SELECT 1 FROM "{self.schema}"."{self.table_name}" AS target
                 WHERE {join_clause}
             )
+            RETURNING *
         """
 
         try:
@@ -72,15 +68,9 @@ class DbInsertHandler:
         finally:
             self._drop_temp(temp)
 
-    def _insert(self, df: pd.DataFrame) -> list[dict]:
-        return self.insert(df)
-
     def _drop_temp(self, temp: str) -> None:
         try:
             with self.engine.begin() as conn:
-                conn.execute(sa.text(
-                    f"IF OBJECT_ID('[{self.schema}].[{temp}]') IS NOT NULL "
-                    f"DROP TABLE [{self.schema}].[{temp}]"
-                ))
+                conn.execute(sa.text(f'DROP TABLE IF EXISTS "{self.schema}"."{temp}"'))
         except Exception:
-            logging.warning("[DbInsertNewHandler] Failed to drop temp table %s", temp)
+            logging.warning("[DbInsertHandler] Failed to drop temp table %s", temp)
