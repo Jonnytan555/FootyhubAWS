@@ -7,7 +7,7 @@ from time import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import logger as logger
+import utils.logging.logger as logger
 import runners.appsettings as settings
 from utils.db.db_access import build_engine
 from listeners.article_pipeline import ArticlePipeline
@@ -21,7 +21,7 @@ _DIR           = os.path.dirname(os.path.abspath(__file__))
 LOG_PATH       = os.path.join(_DIR, "logs")
 SEEN_URLS_PATH = os.path.join(_DIR, "seen_urls.json")
 PROMPT_PATH    = Path(_DIR) / "ai" / "football_search_prompt.txt"
-engine         = build_engine(server=settings.DB_SERVER, database=settings.DB_NAME, driver=settings.DB_DRIVER)
+engine         = build_engine()
 
 logger.setup_log(
     app=settings.APP_NAME,

@@ -6,7 +6,7 @@ from time import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import logger as logger
+import utils.logging.logger as logger
 import runners.appsettings as settings
 from utils.db.db_access import build_engine
 
