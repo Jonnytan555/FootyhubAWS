@@ -1,5 +1,6 @@
 anthropic
 concurrent-log-handler
+retry
 APScheduler
 boto3
 fastapi

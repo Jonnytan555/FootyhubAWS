@@ -2,6 +2,7 @@ import re
 import logging
 import httpx
 from urllib.parse import urlparse
+from retry import retry
 
 from pathlib import Path
 from datetime import datetime, timezone
@@ -71,6 +72,7 @@ class PerplexitySearch(WebSearchReader):
 
         return results
 
+    @retry(exceptions=(httpx.TimeoutException, httpx.HTTPStatusError), tries=3, delay=5, backoff=2, logger=logging.getLogger())
     def _fetch(self, prompt: str) -> tuple[str, list[str]]:
         response = httpx.post(
             self.base_url,
@@ -81,7 +83,7 @@ class PerplexitySearch(WebSearchReader):
                 "search_recency_filter": "week",
             },
             headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
-            timeout=30.0,
+            timeout=60.0,
         )
         response.raise_for_status()
         data = response.json()
